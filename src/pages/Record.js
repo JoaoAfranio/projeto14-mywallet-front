@@ -2,12 +2,24 @@ import styled from "styled-components";
 import COLORS from "../constants/colors";
 import InfoRecord from "../components/InfoRecord";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function Records() {
+  const URL = "http://localhost:5000/records";
+
+  // useEffect(
+  //   {
+  //     axios.get(),
+  //   },
+  //   []
+  // );
+
+  const [records, setRecords] = useState([]);
+
   return (
     <Container>
       <Header>
-        <Tittle>Olá Fulano</Tittle>
+        <Tittle>Olá, Fulano</Tittle>
         <ion-icon name="exit-outline"></ion-icon>
       </Header>
       <ContainerRecord>

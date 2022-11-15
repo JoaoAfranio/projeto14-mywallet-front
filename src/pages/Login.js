@@ -3,18 +3,29 @@ import COLORS from "../constants/colors";
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
+  const URL = "http://localhost:5000/login";
   const navigate = useNavigate();
 
   const [form, setForm] = useState({ email: "", password: "" });
+  const [disabled, setDisabled] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
+    setDisabled(true);
 
-    // add req
-    console.log(form);
-    navigate("/records");
+    axios
+      .post(URL, form)
+      .then((req, res) => {
+        console.log(req);
+        // navigate("/records");
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        setDisabled(false);
+      });
   }
 
   function handleInput(e) {
@@ -24,9 +35,9 @@ function Login() {
   return (
     <Container>
       <Title>MyWallet</Title>
-      <form onSubmit={handleSubmit}>
-        <Input required onChange={handleInput} type="text" placeholder="E-mail" name="email" value={form.email} />
-        <Input required onChange={handleInput} type="password" placeholder="Senha" name="password" value={form.password} />
+      <form disabled={disabled} onSubmit={handleSubmit}>
+        <Input disabled={disabled} required onChange={handleInput} type="email" placeholder="E-mail" name="email" value={form.email} />
+        <Input disabled={disabled} required onChange={handleInput} type="password" placeholder="Senha" name="password" value={form.password} />
         <Button>Entrar</Button>
       </form>
       <TextRegister to="/register">Primeira vez? Cadastre-se!</TextRegister>
