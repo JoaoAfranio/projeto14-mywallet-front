@@ -1,13 +1,43 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import COLORS from "../constants/colors";
 
 function InputRecord() {
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({ value: "", description: "" });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const date = new Date().toLocaleDateString("pt-BR");
+
+    const input = {
+      value: form.value,
+      description: form.description,
+      type: "input",
+      date,
+    };
+
+    // axios.post(URL, input).then((req ,res) => {navigate("/records")})
+
+    // navigate("/records");
+  }
+
+  function handleInput(e) {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  }
+
   return (
     <Container>
       <Tittle>Nova Entrada</Tittle>
-      <Input type="text" placeholder="Valor" />
-      <Input type="text" placeholder="Descrição" />
-      <Button>Salvar Entrada</Button>
+      <form onSubmit={handleSubmit}>
+        <Input onChange={handleInput} name="value" value={form.value} required type="number" placeholder="Valor" />
+        <Input onChange={handleInput} name="description" value={form.description} required type="text" placeholder="Descrição" />
+        <Button>Salvar Entrada</Button>
+      </form>
     </Container>
   );
 }
@@ -20,7 +50,11 @@ const Container = styled.div`
   padding: 25px;
   background-color: ${COLORS.primary};
 
-  gap: 10px;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 `;
 
 const Tittle = styled.h1`
@@ -28,7 +62,7 @@ const Tittle = styled.h1`
   font-weight: 700;
   color: #ffffff;
 
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 `;
 
 const Input = styled.input`

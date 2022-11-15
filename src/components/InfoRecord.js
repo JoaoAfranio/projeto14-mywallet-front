@@ -2,15 +2,13 @@ import styled from "styled-components";
 import COLORS from "../constants/colors";
 
 function InfoRecord(props) {
-  console.log(props);
-
-  const { date, info, value, type } = props;
+  const { date, description, value, type } = props;
 
   return (
     <Container>
       <div>
         <Date>{date}</Date>
-        <Info>{info}</Info>
+        <Info>{description}</Info>
       </div>
       <Value type={type}>{value}</Value>
     </Container>

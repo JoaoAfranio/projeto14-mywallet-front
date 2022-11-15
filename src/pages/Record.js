@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import COLORS from "../constants/colors";
 import InfoRecord from "../components/InfoRecord";
+import { Link } from "react-router-dom";
 
 function Records() {
   return (
@@ -11,23 +12,23 @@ function Records() {
       </Header>
       <ContainerRecord>
         {/* <Info>Não há registros de entrada ou saída</Info> */}
-        <InfoRecord date="30/11" info="Almoço mãe" value="39.90" type="output" />
-        <InfoRecord date="30/11" info="Almoço mãe" value="39.90" type="output" />
-        <InfoRecord date="30/11" info="Almoço mãe" value="39.90" type="output" />
-        <InfoRecord date="30/11" info="Almoço mãe" value="39.90" type="output" />
-        <InfoRecord date="30/11" info="Almoço mãe" value="3000.90" type="input" />
+        <InfoRecord date="30/11" description="Almoço mãe" value="39.90" type="output" />
+        <InfoRecord date="30/11" description="Almoço mãe" value="39.90" type="output" />
+        <InfoRecord date="30/11" description="Almoço mãe" value="39.90" type="output" />
+        <InfoRecord date="30/11" description="Almoço mãe" value="39.90" type="output" />
+        <InfoRecord date="30/11" description="Almoço mãe" value="3000.90" type="input" />
         <BoxBalance>
           <h1>SALDO</h1>
           <p className="balance">2849.96</p>
         </BoxBalance>
       </ContainerRecord>
       <ContainerButton>
-        <Button>
+        <Button to="/newInput">
           <ion-icon name="add-circle-outline"></ion-icon>
           <p>Nova Entrada</p>
         </Button>
 
-        <Button>
+        <Button to="/newOutput">
           <ion-icon name="remove-circle-outline"></ion-icon>
           <p>Nova Saída</p>
         </Button>
@@ -98,7 +99,7 @@ const ContainerButton = styled.div`
   margin-top: -10px;
 `;
 
-const Button = styled.button`
+const Button = styled(Link)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -107,7 +108,10 @@ const Button = styled.button`
   height: 100%;
 
   background-color: ${COLORS.secondary};
+
+  line-height: 20px;
   color: #ffffff;
+  text-decoration: none;
 
   border: none;
   border-radius: 5px;

@@ -1,16 +1,35 @@
 import styled from "styled-components";
 import COLORS from "../constants/colors";
 
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 function Login() {
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({ email: "", password: "" });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    // add req
+    console.log(form);
+    navigate("/records");
+  }
+
+  function handleInput(e) {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  }
   return (
     <Container>
       <Title>MyWallet</Title>
-      <form>
-        <Input type="text" placeholder="E-mail" />
-        <Input type="password" placeholder="Senha" />
+      <form onSubmit={handleSubmit}>
+        <Input required onChange={handleInput} type="text" placeholder="E-mail" name="email" value={form.email} />
+        <Input required onChange={handleInput} type="password" placeholder="Senha" name="password" value={form.password} />
         <Button>Entrar</Button>
       </form>
-      <TextRegister>Primeira vez? Cadastre-se!</TextRegister>
+      <TextRegister to="/register">Primeira vez? Cadastre-se!</TextRegister>
     </Container>
   );
 }
@@ -71,10 +90,12 @@ const Button = styled.button`
   font-weight: 700;
 `;
 
-const TextRegister = styled.p`
+const TextRegister = styled(Link)`
   margin-top: 30px;
 
   color: #ffffff;
   font-size: 15px;
   font-weight: 700;
+
+  text-decoration: none;
 `;
