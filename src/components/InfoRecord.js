@@ -4,10 +4,15 @@ import COLORS from "../constants/colors";
 function InfoRecord(props) {
   const { date, description, value, type } = props;
 
+  const day = date.split("/")[0];
+  const month = date.split("/")[1];
+
   return (
     <Container>
       <div>
-        <Date>{date}</Date>
+        <Date>
+          {day}/{month}
+        </Date>
         <Info>{description}</Info>
       </div>
       <Value type={type}>{value}</Value>
@@ -37,6 +42,7 @@ const Date = styled.h1`
 
 const Info = styled.h1`
   color: #000000;
+  font-weight: 700;
 `;
 
 const Value = styled.h1`

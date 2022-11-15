@@ -10,6 +10,7 @@ function Records() {
   const URL = "http://localhost:5000/record";
   const { user, setUser } = useContext(UserContext);
   const [records, setRecords] = useState([]);
+  const [balance, setBalance] = useState(0);
   const navigate = useNavigate();
 
   const headers = {
@@ -23,10 +24,29 @@ function Records() {
     }
 
     axios.get(URL, { headers }).then((req, res) => {
-      setRecords(req.data);
-      console.log(req);
+      const records = req.data;
+      records.reverse();
+      setRecords(records);
+
+      calcBalance(records);
     });
   }, []);
+
+  function calcBalance(records) {
+    let atualBalance = balance;
+
+    records.forEach((rec) => {
+      const value = Number(rec.value);
+
+      if (rec.type === "input") {
+        atualBalance += value;
+      } else {
+        atualBalance -= value;
+      }
+    });
+
+    setBalance(atualBalance);
+  }
 
   function logout() {
     setUser({});
@@ -48,7 +68,9 @@ function Records() {
         ) : (
           <BoxBalance>
             <h1>SALDO</h1>
-            <p className="balance">2849.96</p>
+            <ValueBalance balance={balance} className="balance">
+              {balance}
+            </ValueBalance>
           </BoxBalance>
         )}
       </ContainerRecord>
@@ -168,8 +190,8 @@ const BoxBalance = styled.div`
   justify-content: space-between;
   font-size: 17px;
 
-  width: 100%;
-  position: sticky;
+  width: 93%;
+  position: absolute;
 
   background-color: #ffffff;
 
@@ -178,8 +200,8 @@ const BoxBalance = styled.div`
   h1 {
     font-weight: 700;
   }
+`;
 
-  .balance {
-    color: ${COLORS.green};
-  }
+const ValueBalance = styled.p`
+  color: ${(props) => (props.balance >= 0 ? COLORS.green : COLORS.red)};
 `;
