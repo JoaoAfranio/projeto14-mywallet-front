@@ -1,36 +1,47 @@
 import styled from "styled-components";
 import COLORS from "../constants/colors";
 import InfoRecord from "../components/InfoRecord";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import UserContext from "../contexts/user";
 import axios from "axios";
 
 function Records() {
   const URL = "http://localhost:5000/record";
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [records, setRecords] = useState([]);
+  const navigate = useNavigate();
 
   const headers = {
     authorization: `Bearer ${user.token}`,
   };
 
   useEffect(() => {
+    if (!user.token) {
+      alert("Você não esta logado!");
+      navigate("/");
+    }
+
     axios.get(URL, { headers }).then((req, res) => {
       setRecords(req.data);
       console.log(req);
     });
   }, []);
 
+  function logout() {
+    setUser({});
+    navigate("/");
+  }
+
   return (
     <Container>
       <Header>
         <Tittle>Olá, {user.name}</Tittle>
-        <ion-icon name="exit-outline"></ion-icon>
+        <ion-icon onClick={logout} name="exit-outline"></ion-icon>
       </Header>
       <ContainerRecord>
-        {records.map((record) => {
-          return <InfoRecord date={record.date} description={record.description} value={record.value} type={record.type} />;
+        {records.map((record, idx) => {
+          return <InfoRecord key={idx} date={record.date} description={record.description} value={record.value} type={record.type} />;
         })}
         {records.length === 0 ? (
           <Info>Não há registros de entrada ou saída</Info>

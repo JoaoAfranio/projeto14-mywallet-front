@@ -10,12 +10,7 @@ import UserContext from "./contexts/user";
 import { useState } from "react";
 
 function App() {
-  const [user, setUser] = useState({
-    _id: "6373d4ca44a77ef9ade40469",
-    name: "joao",
-    email: "joao@hotmail.com",
-    token: "d9aa0686-a444-4403-881b-cd6391a2c54d",
-  });
+  const [user, setUser] = useState({});
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

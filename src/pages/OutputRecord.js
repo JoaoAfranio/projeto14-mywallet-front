@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import COLORS from "../constants/colors";
@@ -13,6 +13,13 @@ function OutputRecord() {
   const [form, setForm] = useState({ value: "", description: "" });
 
   const URL = "http://localhost:5000/record";
+
+  useEffect(() => {
+    if (!user.token) {
+      alert("Você não esta logado!");
+      navigate("/");
+    }
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();

@@ -33,8 +33,6 @@ function Login() {
         alert(err.response.data.message);
         setDisabled(false);
       });
-
-    // add req
   }
 
   function handleInput(e) {
