@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import COLORS from "../constants/colors";
+import InfoRecord from "../components/InfoRecord";
 
 function Records() {
   return (
@@ -9,7 +10,16 @@ function Records() {
         <ion-icon name="exit-outline"></ion-icon>
       </Header>
       <ContainerRecord>
-        <Info>Não há registros de entrada ou saída</Info>
+        {/* <Info>Não há registros de entrada ou saída</Info> */}
+        <InfoRecord date="30/11" info="Almoço mãe" value="39.90" type="output" />
+        <InfoRecord date="30/11" info="Almoço mãe" value="39.90" type="output" />
+        <InfoRecord date="30/11" info="Almoço mãe" value="39.90" type="output" />
+        <InfoRecord date="30/11" info="Almoço mãe" value="39.90" type="output" />
+        <InfoRecord date="30/11" info="Almoço mãe" value="3000.90" type="input" />
+        <BoxBalance>
+          <h1>SALDO</h1>
+          <p className="balance">2849.96</p>
+        </BoxBalance>
       </ContainerRecord>
       <ContainerButton>
         <Button>
@@ -56,14 +66,17 @@ const Tittle = styled.h1`
 
 const ContainerRecord = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+
+  position: relative;
 
   height: 70vh;
 
   background-color: #ffffff;
 
   border-radius: 5px;
+
+  padding: 0px 10px;
 `;
 
 const Info = styled.h1`
@@ -71,6 +84,8 @@ const Info = styled.h1`
   text-align: center;
   font-size: 20px;
   color: ${COLORS.grey};
+
+  margin: auto;
 `;
 
 const ContainerButton = styled.div`
@@ -109,5 +124,24 @@ const Button = styled.button`
     font-weight: 700;
 
     width: 30px;
+  }
+`;
+
+const BoxBalance = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 17px;
+
+  width: 95%;
+  position: absolute;
+
+  bottom: 10px;
+
+  h1 {
+    font-weight: 700;
+  }
+
+  .balance {
+    color: ${COLORS.green};
   }
 `;
