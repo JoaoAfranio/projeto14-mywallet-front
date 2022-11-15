@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import COLORS from "../constants/colors";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import UserContext from "../contexts/user";
 
 function Login() {
+  const { setUser } = useContext(UserContext);
+
   const URL = "http://localhost:5000/login";
   const navigate = useNavigate();
 
@@ -19,8 +22,8 @@ function Login() {
     axios
       .post(URL, form)
       .then((req, res) => {
-        console.log(req);
-        // navigate("/records");
+        setUser(req.data);
+        navigate("/records");
       })
       .catch((err) => {
         alert(err.response.data.message);

@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import COLORS from "../constants/colors";
+import UserContext from "../contexts/user";
+import axios from "axios";
 
 function InputRecord() {
+  const { user } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const [form, setForm] = useState({ value: "", description: "" });
+
+  const URL = "http://localhost:5000/record";
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -14,15 +20,23 @@ function InputRecord() {
     const date = new Date().toLocaleDateString("pt-BR");
 
     const input = {
+      userId: user._id,
       value: form.value,
       description: form.description,
       type: "input",
       date,
     };
 
-    // axios.post(URL, input).then((req ,res) => {navigate("/records")})
+    const headers = {
+      authorization: `Bearer ${user.token}`,
+    };
 
-    // navigate("/records");
+    axios
+      .post(URL, input, { headers })
+      .then((req, res) => {
+        navigate("/records");
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleInput(e) {

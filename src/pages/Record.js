@@ -2,37 +2,44 @@ import styled from "styled-components";
 import COLORS from "../constants/colors";
 import InfoRecord from "../components/InfoRecord";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import UserContext from "../contexts/user";
+import axios from "axios";
 
 function Records() {
-  const URL = "http://localhost:5000/records";
-
-  // useEffect(
-  //   {
-  //     axios.get(),
-  //   },
-  //   []
-  // );
-
+  const URL = "http://localhost:5000/record";
+  const { user } = useContext(UserContext);
   const [records, setRecords] = useState([]);
+
+  const headers = {
+    authorization: `Bearer ${user.token}`,
+  };
+
+  useEffect(() => {
+    axios.get(URL, { headers }).then((req, res) => {
+      setRecords(req.data);
+      console.log(req);
+    });
+  }, []);
 
   return (
     <Container>
       <Header>
-        <Tittle>Olá, Fulano</Tittle>
+        <Tittle>Olá, {user.name}</Tittle>
         <ion-icon name="exit-outline"></ion-icon>
       </Header>
       <ContainerRecord>
-        {/* <Info>Não há registros de entrada ou saída</Info> */}
-        <InfoRecord date="30/11" description="Almoço mãe" value="39.90" type="output" />
-        <InfoRecord date="30/11" description="Almoço mãe" value="39.90" type="output" />
-        <InfoRecord date="30/11" description="Almoço mãe" value="39.90" type="output" />
-        <InfoRecord date="30/11" description="Almoço mãe" value="39.90" type="output" />
-        <InfoRecord date="30/11" description="Almoço mãe" value="3000.90" type="input" />
-        <BoxBalance>
-          <h1>SALDO</h1>
-          <p className="balance">2849.96</p>
-        </BoxBalance>
+        {records.map((record) => {
+          return <InfoRecord date={record.date} description={record.description} value={record.value} type={record.type} />;
+        })}
+        {records.length === 0 ? (
+          <Info>Não há registros de entrada ou saída</Info>
+        ) : (
+          <BoxBalance>
+            <h1>SALDO</h1>
+            <p className="balance">2849.96</p>
+          </BoxBalance>
+        )}
       </ContainerRecord>
       <ContainerButton>
         <Button to="/newInput">
@@ -90,6 +97,8 @@ const ContainerRecord = styled.div`
   border-radius: 5px;
 
   padding: 0px 10px;
+
+  overflow: auto;
 `;
 
 const Info = styled.h1`
@@ -148,10 +157,12 @@ const BoxBalance = styled.div`
   justify-content: space-between;
   font-size: 17px;
 
-  width: 95%;
-  position: absolute;
+  width: 100%;
+  position: sticky;
 
-  bottom: 10px;
+  background-color: #ffffff;
+
+  bottom: 5px;
 
   h1 {
     font-weight: 700;
