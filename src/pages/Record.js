@@ -49,8 +49,16 @@ function Records() {
   }
 
   function logout() {
-    setUser({});
-    navigate("/");
+    const URL = "http://localhost:5000/logout";
+    axios
+      .post(URL, {}, { headers })
+      .then(() => {
+        setUser({});
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
