@@ -1,83 +1,80 @@
-import styled from "styled-components"
-import COLORS from "../constants/colors"
-
+import styled from "styled-components";
+import COLORS from "../constants/colors";
 
 function Login() {
-    return (
-        <Container>
-            <h1>MyWallet</h1>
-            <form>
-                <input type="text" placeholder="E-mail" />
-                <input type="password" placeholder="Senha" />
-                <button>Entrar</button>
-            </form>
-            <p>Primeira vez? Cadastre-se!</p>
-        </Container>
-        
-    )
+  return (
+    <Container>
+      <Title>MyWallet</Title>
+      <form>
+        <Input type="text" placeholder="E-mail" />
+        <Input type="password" placeholder="Senha" />
+        <Button>Entrar</Button>
+      </form>
+      <TextRegister>Primeira vez? Cadastre-se!</TextRegister>
+    </Container>
+  );
 }
 
-export default Login
-
+export default Login;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${COLORS.primary};
+
+  form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 
-    background-color: ${COLORS.primary};
+    gap: 10px;
 
+    width: 85vw;
+  }
+`;
 
-    h1 {
-        font-size: 32px;
-        font-family: 'Saira Stencil One';
-        color: #FFFFFF;
+const Title = styled.h1`
+  font-size: 32px;
+  font-family: "Saira Stencil One";
+  color: #ffffff;
 
-        margin-bottom: 30px;
-    }
+  margin-bottom: 30px;
+`;
 
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+const Input = styled.input`
+  width: 100%;
+  padding: 15px;
 
-        gap: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
 
-        width: 90vw;
-    }
+  font-size: 20px;
+  color: #000000;
 
-    input {
-        padding: 15px;
+  box-sizing: border-box;
+`;
 
-        border-radius: 5px;
-        border: none;
-        outline: none;
+const Button = styled.button`
+  width: 100%;
+  background-color: ${COLORS.secondary};
+  color: #ffffff;
 
-        font-size: 20px;
-        color: #000000;
-        
-    }
+  border-radius: 5px;
+  border: none;
 
-    button {
-        background-color: ${COLORS.secondary};
-        color: #FFFFFF;
+  padding: 15px;
 
-        border-radius: 5px;
-        border: none;
-        
-        width: 100%;
-        padding: 15px;
+  font-size: 20px;
+  font-weight: 700;
+`;
 
-        font-size: 20px;
-        font-weight: 700;
-    }
+const TextRegister = styled.p`
+  margin-top: 30px;
 
-    p {
-        margin-top: 30px;
-
-        color: #FFFFFF;
-        font-size: 15px;
-        font-weight: 700;
-    }
-`
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+`;
