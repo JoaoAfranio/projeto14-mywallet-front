@@ -4,6 +4,7 @@ import COLORS from "../constants/colors";
 function InfoRecord(props) {
   const { date, description, value, type } = props;
 
+  const floatValue = Number(value).toFixed(2).replace(".", ",");
   const day = date.split("/")[0];
   const month = date.split("/")[1];
 
@@ -15,7 +16,7 @@ function InfoRecord(props) {
         </Date>
         <Info>{description}</Info>
       </div>
-      <Value type={type}>{value}</Value>
+      <Value type={type}>{floatValue}</Value>
     </Container>
   );
 }

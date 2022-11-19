@@ -77,7 +77,7 @@ function Records() {
           <BoxBalance>
             <h1>SALDO</h1>
             <ValueBalance balance={balance} className="balance">
-              {balance}
+              {Number(balance).toFixed(2).replace(".", ",")}
             </ValueBalance>
           </BoxBalance>
         )}
@@ -198,12 +198,12 @@ const BoxBalance = styled.div`
   justify-content: space-between;
   font-size: 17px;
 
-  width: 93%;
-  position: absolute;
+  width: 100%;
+  position: sticky;
 
   background-color: #ffffff;
 
-  bottom: 5px;
+  bottom: 0;
 
   h1 {
     font-weight: 700;
