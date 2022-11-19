@@ -77,7 +77,7 @@ function Records() {
           <BoxBalance>
             <h1>SALDO</h1>
             <ValueBalance balance={balance} className="balance">
-              {Number(balance).toFixed(2).replace(".", ",")}
+              {Number(balance).toLocaleString("pt-br", { minimumFractionDigits: 2 })}
             </ValueBalance>
           </BoxBalance>
         )}

@@ -4,7 +4,7 @@ import COLORS from "../constants/colors";
 function InfoRecord(props) {
   const { date, description, value, type } = props;
 
-  const floatValue = Number(value).toFixed(2).replace(".", ",");
+  const floatValue = Number(value).toLocaleString("pt-br", { minimumFractionDigits: 2 });
   const day = date.split("/")[0];
   const month = date.split("/")[1];
 
